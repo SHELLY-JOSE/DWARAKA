@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Dwaraka AUPS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif; /* Modern, clean font */
+            height: 100vh;
+            overflow: hidden; /* Prevent scroll for particle effect */
+            background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB); /* Vibrant gradient colors */
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite; /* Slower, smoother animation */
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            position: relative; /* For particle canvas positioning */
+            z-index: 1; /* Ensure content is above particles */
+        }
+
+        /* Particle Canvas Overlay */
+        #particleCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Behind other content */
+            pointer-events: none; /* Allows clicks to pass through to elements below */
+        }
+
+        /* Keyframe for Background Gradient Animation */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Main Heading */
+        h1 {
+            font-family: 'Orbitron', sans-serif; /* Futuristic font */
+            font-size: 3.2em; /* Larger for impact */
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7), 0 0 25px rgba(0, 255, 231, 0.8); /* Stronger glow */
+            animation: glow 2.5s ease-in-out infinite alternate; /* Slower, more pronounced glow */
+            letter-spacing: 2px; /* Spacing for readability */
+        }
+
+        /* Keyframe for Heading Glow Animation */
+        @keyframes glow {
+            from { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 0 0 15px rgba(0, 255, 231, 0.6); }
+            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 35px rgba(0, 255, 231, 0.9), 0 0 50px rgba(0, 255, 231, 0.7); }
+        }
+
+        /* Date and Time Display */
+        .date-time {
+            font-size: 1.3em;
+            margin-top: 10px;
+            padding: 8px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeInScale 1.5s ease-out forwards; /* Fade in and slight scale */
+            opacity: 0; /* Start hidden for animation */
+            animation-delay: 0.5s;
+            transition: all 0.3s ease; /* Smooth transitions for hover */
+        }
+
+        /* Spinner (Loading Indicator) */
+        .spinner {
+            border: 8px solid rgba(255, 255, 255, 0.3); /* Lighter border */
+            border-top: 8px solid #00FFFF; /* Cyan glow */
+            border-radius: 50%;
+            width: 80px; /* Larger spinner */
+            height: 80px;
+            animation: spin 1.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite; /* More dynamic spin */
+            margin: 30px; /* More space */
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.6); /* Glow around spinner */
+            transition: transform 0.3s ease;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Info Boxes (Specialty and Thought) */
+        .info-box {
+            background: rgba(255, 255, 255, 0.2); /* Slightly less opaque */
+            padding: 20px 25px;
+            margin: 15px; /* More spacing */
+            border-radius: 20px; /* More rounded */
+            backdrop-filter: blur(15px); /* Stronger blur */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* Deeper shadow */
+            max-width: 650px; /* Wider boxes */
+            width: 100%;
+            animation: fadeInScale 1.5s ease-out forwards; /* Fade in and slight scale */
+            opacity: 0; /* Start hidden for animation */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for hover */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
+        }
+
+        /* Delay for sequential appearance */
+        #speciality { animation-delay: 1.0s; }
+        #thought { animation-delay: 1.5s; }
+
+        /* Keyframe for Fade In and Scale Animation */
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Hover Effects for Interactive Elements */
+        .date-time:hover,
+        .info-box:hover {
+            transform: translateY(-5px) scale(1.02); /* Lift and slightly enlarge */
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5); /* More prominent shadow */
+            cursor: pointer;
+        }
+        .spinner:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.8);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5em; }
+            .info-box { font-size: 0.95em; padding: 18px 22px; }
+            .date-time { font-size: 1em; }
+            .spinner { width: 60px; height: 60px; margin: 25px; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2em; letter-spacing: 1px; }
+            .info-box { font-size: 0.9em; padding: 15px 20px; margin: 10px; }
+            .date-time { font-size: 0.9em; }
+            .spinner { width: 50px; height: 50px; margin: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="particleCanvas"></canvas>
+
+    <h1>Welcome to Dwaraka AUPS</h1>
+    <div class="date-time" id="dateTime">Loading date & time...</div>
+
+    <div class="spinner"></div>
+
+    <div class="info-box" id="speciality">Loading today’s speciality...</div>
+    <div class="info-box" id="thought">Loading motivational thought...</div>
+
+    <script>
+        // --- Real-time Date and Time Update ---
+        function updateDateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const time = now.toLocaleTimeString('en-IN');
+            document.getElementById("dateTime").textContent = now.toLocaleDateString('en-IN', options) + " | " + time;
+        }
+        // Update every second
+        setInterval(updateDateTime, 1000);
+        // Initial call to display immediately
+        updateDateTime();
+
+        // --- Special Days Logic ---
+        const specialDays = {
+            "01-01": "New Year’s Day 🎉",
+            "01-26": "Republic Day 🇮�",
+            "02-14": "Valentine’s Day ❤️",
+            "03-08": "International Women’s Day 👩‍🏫",
+            "04-07": "World Health Day 🏥",
+            "04-22": "Earth Day 🌍",
+            "05-01": "Labor Day 👷",
+            "06-05": "World Environment Day 🌿",
+            "06-14": "World Blood Donor Day 🩸",
+            "07-01": "Doctor’s Day 🩺",
+            "08-15": "Independence Day 🇮🇳",
+            "09-05": "Teacher’s Day 👩‍🏫",
+            "10-02": "Gandhi Jayanti 🙏",
+            "11-14": "Children’s Day 👧🧒",
+            "12-25": "Christmas Day 🎄"
+        };
+
+        const today = new Date();
+        const monthDayKey = ("0" + (today.getMonth() + 1)).slice(-2) + "-" + ("0" + today.getDate()).slice(-2);
+        const speciality = specialDays[monthDayKey] || "Make the most of today 🌟";
+        document.getElementById("speciality").textContent = "🌟 Speciality Today: " + speciality;
+
+        // --- Motivational Thoughts Logic ---
+        const thoughts = [
+            "Believe in yourself.", "You are stronger than you think.", "Be a reason someone smiles today.",
+            "Keep learning, keep growing.", "Kindness is a superpower.", "Success begins with self-belief.",
+            "Be the best version of you.", "Your effort matters more than perfection.", "Small steps every day build big results.",
+            "Learning is your superpower.", "Make today count.", "Your dreams are valid.",
+            "Work hard, stay humble.", "Don’t wait for opportunity, create it.", "A new day is a new beginning.",
+            "The journey matters more than the result.", "Grow through what you go through.", "Progress, not perfection.",
+            "Do it with all your heart.", "Shine bright, even on cloudy days.", "Believe. Achieve. Succeed.",
+            "Your attitude decides your direction.", "The best preparation is doing your best.", "Learning never exhausts the mind.",
+            "Push yourself, because no one else will.", "Focus on the good.", "You can do hard things.",
+            "Great things take time.", "Always try to be better than yesterday.", "Positivity is powerful.",
+            "One day or day one – you decide.", "Dream big and dare bigger.", "Mistakes are proof you're trying.",
+            "Be proud of how far you've come.", "Stay curious.", "Be brave, be bold, be you.",
+            "You matter. You’re important.", "Make your parents proud.", "You are capable of amazing things.",
+            "Never give up on learning.", "Be thankful, be thoughtful.", "The world needs your light.",
+            "Your future is created by what you do today.", "Discipline beats motivation.", "Always keep trying.",
+            "Learning is a journey, enjoy it.", "Let your dreams be bigger than your fears.", "Do good, feel good.",
+            "A smile is the best accessory.", "Set goals, crush them.", "Think positive, act positive.",
+            "Today is your chance to shine.", "Small progress is still progress.", "Be your own hero.",
+            "Confidence comes from effort.", "Try again. Fail again. Fail better.", "Stay positive, work hard.",
+            "Be better than you were yesterday.", "You have unlimited potential.", "Stay focused and never quit.",
+            "Every day is a new opportunity.", "Act with purpose.", "Be the change.",
+            "Stars can't shine without darkness.", "Keep going no matter what.", "Turn dreams into plans.",
+            "Your mindset shapes your reality.", "Stay strong and study on!", "Choose growth over comfort.",
+            "Wake up with purpose.", "It’s a great day to learn something new.", "Aim high, reach far.",
+            "Your smile can change the world.", "Effort equals success.", "Just keep moving forward.",
+            "Never stop asking questions.", "Courage starts with showing up.", "Lead with kindness.",
+            "Explore. Discover. Grow.", "Be a learner for life.", "Difficult roads lead to beautiful places.",
+            "Give your best, always.", "Hard work beats talent.", "Stay dedicated.",
+            "Stay grounded, aim high.", "If it doesn’t challenge you, it doesn’t change you.",
+            "Stay patient and trust the journey.", "Do your best, and forget the rest.", "You’re doing better than you think.",
+            "Try, fail, learn, repeat.", "Stay humble, stay hungry.", "Take pride in how far you’ve come.",
+            "Always choose kindness.", "Dream more. Do more.", "Work hard, dream big.",
+            "A goal without a plan is just a wish.", "Live. Learn. Lead.", "Education is your passport to the future.",
+            "Make your mark.", "You’ve got this!"
+        ];
+
+        const randomThought = thoughts[Math.floor(Math.random() * thoughts.length)];
+        document.getElementById("thought").textContent = "💬 Thought of the Day: " + randomThought;
+
+        // --- Particle Effect Canvas ---
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const particleCount = 70; // Number of particles
+
+        // Function to set canvas dimensions
+        function setCanvasDimensions() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        // Particle class definition
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 3 + 1; // Smaller particles
+                this.speedX = Math.random() * 0.8 - 0.4; // Slower movement
+                this.speedY = Math.random() * 0.8 - 0.4;
+                this.color = `rgba(255, 255, 255, ${Math.random() * 0.5 + 0.3})`; // Translucent white
+                this.opacity = Math.random() * 0.8 + 0.2;
+            }
+
+            // Update particle position and opacity
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Bounce off edges
+                if (this.x + this.size > canvas.width || this.x - this.size < 0) {
+                    this.speedX *= -1;
+                }
+                if (this.y + this.size > canvas.height || this.y - this.size < 0) {
+                    this.speedY *= -1;
+                }
+
+                // Fade out slightly over time, then reset
+                this.opacity -= 0.005;
+                if (this.opacity <= 0) {
+                    this.reset();
+                }
+            }
+
+            // Reset particle to a new random position
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.opacity = Math.random() * 0.8 + 0.2;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 0.8 - 0.4;
+                this.speedY = Math.random() * 0.8 - 0.4;
+            }
+
+            // Draw particle
+            draw() {
+                ctx.fillStyle = this.color.replace(/[^,]+\)/, `${this.opacity})`); // Update color with current opacity
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Initialize particles
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle(Math.random() * canvas.width, Math.random() * canvas.height));
+            }
+        }
+
+        // Animation loop for particles
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            requestAnimationFrame(animateParticles); // Loop animation
+        }
+
+        // --- Event Listeners ---
+        window.addEventListener('resize', () => {
+            setCanvasDimensions();
+            initParticles(); // Reinitialize particles on resize
+        });
+
+        // Initialize and start particles when the window loads
+        window.onload = function() {
+            setCanvasDimensions();
+            initParticles();
+            animateParticles();
+        };
+
+
+        // --- Redirect to login page after a delay ---
+        setTimeout(() => {
+            window.location.href = "https://script.google.com/macros/s/AKfycbws-UC5xDloRgyytC3ywBUp0LdURDo4gPi_CgA_rid-OX-XbxzNOL7biVczagNGx0R4/exec";
+        }, 2000); // 7 seconds delay
+    </script>
+
+</body>
+</html>
+�
