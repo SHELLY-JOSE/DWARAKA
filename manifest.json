@@ -1,0 +1,20 @@
+{
+  "name": "Dwaraka AUPS",
+  "short_name": "Dwaraka",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6B04FF",
+  "icons": [
+    {
+      "src": "DWARAKA-25-26.PNG",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "DWARAKA-25-26.PNG",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
